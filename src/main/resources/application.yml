@@ -1,0 +1,21 @@
+server:
+  port: 8761 # Eureka Server'ın dinleyeceği port (genellikle varsayılan 8761 kullanılır)
+
+eureka:
+  client:
+    # Bu bir Eureka Server olduğu için, kendisinin başka bir Eureka Server'a (başka bir peer'a) kaydolmasına gerek yoktur.
+    register-with-eureka: false
+    # Bu bir Eureka Server olduğu için, diğer Eureka Server'lardan (başka bir peer'dan) servis kayıtlarını getirmesine gerek yoktur.
+    fetch-registry: false
+    # Eureka Server'ın kendi URI'si. Diğer servisler buraya bağlanacak.
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+  server:
+    # Kendini koruma modunu etkinleştirir. Ağ sorunları nedeniyle kalp atışları aksadığında servisleri haksız yere kayıttan düşürmeyi önler.
+    enable-self-preservation: true
+    # Kalp atışı eşiği: Belirli bir sürede beklenen yenilemelerin yüzdesi. Altına düşerse kendini koruma modu devreye girer.
+    renewal-percent-threshold: 0.85
+    # Kayıttan düşürülen (evicted) instance'ların listesinin silinme zamanı (varsayılan: 60000ms = 60s)
+    eviction-interval-timer-in-ms: 60000
+    # Yenileme bilgilerinin sunucu tarafından güncellenme aralığı (varsayılan: 30000ms = 30s)
+    response-cache-update-interval-ms: 30000
